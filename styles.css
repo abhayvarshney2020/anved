@@ -8,21 +8,21 @@
 :root {
     --font-primary: 'Plus Jakarta Sans', sans-serif;
     
-    /* Official Brand Colors (Navy & Royal Blue Gradient) */
-    --primary: #26469D;            /* Dark Navy Blue */
-    --primary-hover: #1D357A;
-    --primary-glow: rgba(38, 70, 157, 0.15);
+    /* Vibrant Colorful Brand System (Indigo, Purple, Teal & Gold) */
+    --primary: #4F46E5;            /* Rich Indigo */
+    --primary-hover: #4338CA;
+    --primary-glow: rgba(79, 70, 229, 0.15);
     
-    --accent: #38ADE3;             /* Bright Royal Blue */
-    --accent-hover: #26469D;
-    --accent-glow: rgba(56, 173, 227, 0.15);
-    --accent-light: #F0F7FF;       /* Light Ice Blue */
+    --accent: #D946EF;             /* Bright Fuchsia/Purple */
+    --accent-hover: #C084FC;
+    --accent-glow: rgba(217, 70, 239, 0.15);
+    --accent-light: #FDF4FF;       /* Soft Light Pink/Fuchsia */
     
     --bg-primary: #FFFFFF;
     --bg-secondary: #F8FAFC;       /* Slate 50 */
-    --bg-dark: #0B132B;            /* Deep Blue-Black */
-    --bg-dark-hover: #1C2541;      /* Slate 800 */
-    --bg-accent-light: #F0F7FF;
+    --bg-dark: #0F172A;            /* Deep Slate 900 */
+    --bg-dark-hover: #1E293B;      /* Slate 800 */
+    --bg-accent-light: #F5F3FF;
     
     --text-primary: #334155;       /* Slate 700 */
     --text-title: #0F172A;         /* Slate 900 */
@@ -163,7 +163,7 @@ ul {
 
 .btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 12px 24px -8px rgba(38, 70, 157, 0.45);
+    box-shadow: 0 12px 24px -8px rgba(79, 70, 229, 0.45);
 }
 
 .btn-secondary {
@@ -2046,4 +2046,41 @@ section {
         gap: 16px;
         flex-direction: column;
     }
+}
+
+/* ==========================================================================
+   TYPING ENGINE, IMAGE FLOATING & HEADER BLUR GLASSMORPHISM
+   ========================================================================== */
+
+/* Typed text cursor blink */
+.typed-cursor {
+    border-right: 3px solid var(--accent);
+    padding-right: 4px;
+    animation: blink-cursor 0.75s step-end infinite;
+    white-space: nowrap;
+}
+@keyframes blink-cursor {
+    from, to { border-color: transparent }
+    50% { border-color: var(--accent); }
+}
+
+/* Floating animation for hero image */
+.hero-card-img {
+    animation: floatImage 6s ease-in-out infinite;
+}
+@keyframes floatImage {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+/* Glassmorphism Header state on scroll */
+.navbar-header {
+    transition: background 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease !important;
+}
+.navbar-header.scrolled {
+    background: rgba(255, 255, 255, 0.88) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: var(--shadow-sm) !important;
+    padding: 12px 0 !important;
 }

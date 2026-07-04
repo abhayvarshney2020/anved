@@ -7,6 +7,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set to Formspree endpoint (e.g. 'https://formspree.io/f/xxxx') to trigger email notifications!
     const FORMSPREE_ENDPOINT = '';
 
+    const getCategoryTagHTML = (cat) => {
+        const category = cat.toUpperCase().trim();
+        let colorStyle = 'background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE;'; // Default Blue
+        if (category.includes('TAX')) {
+            colorStyle = 'background-color: #FEF3C7; color: #D97706; border: 1px solid #FCD34D;'; // Amber
+        } else if (category.includes('GST')) {
+            colorStyle = 'background-color: #D1FAE5; color: #059669; border: 1px solid #A7F3D0;'; // Emerald
+        } else if (category.includes('LLP') || category.includes('ROC') || category.includes('SECRETARIAL')) {
+            colorStyle = 'background-color: #EEF2FF; color: #4F46E5; border: 1px solid #C7D2FE;'; // Indigo
+        } else if (category.includes('FEMA') || category.includes('RBI')) {
+            colorStyle = 'background-color: #FCE7F3; color: #DB2777; border: 1px solid #FBCFE8;'; // Pink
+        }
+        return `<span class="insight-tag" style="padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 0.72rem; display: inline-block; letter-spacing: 0.02em; ${colorStyle}">${cat}</span>`;
+    };
+
     /* --- Database Initialization (localStorage fallback) --- */
     const defaultInsights = [
         {
@@ -217,8 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'insight-card';
             card.innerHTML = `
                 <div class="insight-card-body">
-                    <span class="insight-tag">${art.category}</span>
-                    <h3>${art.title}</h3>
+                    ${getCategoryTagHTML(art.category)}
+                    <h3 style="margin-top: 10px;">${art.title}</h3>
                     <p>${art.desc}</p>
                     <div class="insight-meta">
                         <span>${art.date}</span>
@@ -254,8 +269,8 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'insight-card';
             card.innerHTML = `
                 <div class="insight-card-body">
-                    <span class="insight-tag">${art.category}</span>
-                    <h3>${art.title}</h3>
+                    ${getCategoryTagHTML(art.category)}
+                    <h3 style="margin-top: 10px;">${art.title}</h3>
                     <p>${art.desc}</p>
                     <div class="insight-meta">
                         <span>${art.date}</span>
@@ -742,5 +757,56 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // 5. Scroll Header Glassmorphic background state transition
+    const navbarHeader = document.querySelector('.navbar-header');
+    if (navbarHeader) {
+        const toggleHeaderScrolled = () => {
+            if (window.scrollY > 24) {
+                navbarHeader.classList.add('scrolled');
+            } else {
+                navbarHeader.classList.remove('scrolled');
+            }
+        };
+        window.addEventListener('scroll', toggleHeaderScrolled);
+        toggleHeaderScrolled(); // Run once on load
+    }
+
+    // 6. Typewriter Dynamic Text Loop
+    const typingTextEl = document.getElementById('typing-text');
+    if (typingTextEl) {
+        const wordsList = ["Finance Horizon", "Tax Compliance", "Statutory Audits", "Corporate Law"];
+        let wordIdx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+
+        const typeLoop = () => {
+            const currentWord = wordsList[wordIdx];
+            if (isDeleting) {
+                typingTextEl.innerText = currentWord.substring(0, charIdx - 1);
+                charIdx--;
+                typingSpeed = 50; // Deleting is faster
+            } else {
+                typingTextEl.innerText = currentWord.substring(0, charIdx + 1);
+                charIdx++;
+                typingSpeed = 120; // Natural typing speed
+            }
+
+            if (!isDeleting && charIdx === currentWord.length) {
+                isDeleting = true;
+                typingSpeed = 2000; // Pause at end of word
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false;
+                wordIdx = (wordIdx + 1) % wordsList.length;
+                typingSpeed = 400; // Brief pause before typing next word
+            }
+
+            setTimeout(typeLoop, typingSpeed);
+        };
+
+        // Start loop
+        typeLoop();
+    }
 
 });
