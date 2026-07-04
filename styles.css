@@ -1591,7 +1591,7 @@ section {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 1.1fr 0.8fr 1.1fr;
+    grid-template-columns: 1.5fr 1fr;
     gap: 60px;
     margin-bottom: 48px;
 }
