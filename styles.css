@@ -2262,3 +2262,72 @@ section {
 .services-sublist-item p {
     text-align: justify;
 }
+
+/* ==========================================================================
+   RESPONSIVE ZOHO SHOWCASE BANNER
+   ========================================================================== */
+.zoho-showcase-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.03) 0%, rgba(217, 70, 239, 0.03) 100%), var(--bg-card);
+    border: 2px solid var(--primary);
+    padding: 40px;
+    box-shadow: var(--shadow-premium);
+    border-radius: var(--border-radius-lg);
+}
+
+.zoho-showcase-content {
+    flex: 1;
+}
+
+.zoho-showcase-logo-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.zoho-showcase-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-title);
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.zoho-showcase-action {
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .zoho-showcase-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+        padding: 28px 20px;
+    }
+    
+    .zoho-showcase-logo-row {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .zoho-showcase-title {
+        text-align: center !important;
+        font-size: 1.5rem;
+    }
+    
+    .zoho-showcase-action {
+        width: 100%;
+    }
+    
+    .zoho-showcase-action .btn {
+        width: 100%;
+        text-align: center;
+        display: block;
+        box-sizing: border-box;
+        padding: 16px 20px !important;
+    }
+}
