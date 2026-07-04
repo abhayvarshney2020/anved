@@ -5,7 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Set to Formspree endpoint (e.g. 'https://formspree.io/f/xxxx') to trigger email notifications!
-    const FORMSPREE_ENDPOINT = '';
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mpqgkknq';
 
     const getCategoryTagHTML = (cat) => {
         const category = cat.toUpperCase().trim();
