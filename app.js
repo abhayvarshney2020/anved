@@ -23,58 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /* --- Database Initialization (localStorage fallback) --- */
-    const defaultInsights = [
-        {
-            id: 1,
-            title: "New Slabs and Surcharges for FY 2025-26 under New Regime",
-            category: "INCOME TAX",
-            desc: "An analysis of standard deduction changes to ₹75,000 and updated slab rates under Section 115BAC.",
-            date: "July 2026"
-        },
-        {
-            id: 2,
-            title: "Filing Guidelines for E-Way Bills & Invoicing Updates",
-            category: "GST ALERTS",
-            desc: "Key revisions introduced in compliance procedures for multi-state corporate logistic setups.",
-            date: "June 2026"
-        },
-        {
-            id: 3,
-            title: "Annual ROC Web-form Updates: Form 8 & Form 11 Compliance",
-            category: "LLP FILINGS",
-            desc: "Essential timeline updates and audit checklists for Limited Liability Partnerships operating in India.",
-            date: "May 2026"
-        }
-    ];
+    const defaultInsights = [];
+    const defaultCareers = [];
 
-    const defaultCareers = [
-        {
-            id: 1,
-            title: "CA Article Trainee",
-            type: "Full-Time",
-            location: "BTM Layout, Bangalore",
-            meta: "Openings: 3",
-            desc: "We are seeking motivated candidates who have cleared one or both groups of CA Intermediate. Exposure to accounting double-entry systems, direct tax filing, and basic auditing guidelines is preferred."
-        },
-        {
-            id: 2,
-            title: "Indirect Tax Associate",
-            type: "Full-Time",
-            location: "BTM Layout, Bangalore",
-            meta: "Experience: 1-3 Years",
-            desc: "Managing monthly and annual GST filing processes, conducting input credit reconciliations (GSTR-2B vs. Books), and compiling document briefs for client representations."
-        },
-        {
-            id: 3,
-            title: "Statutory Audit Senior",
-            type: "Full-Time",
-            location: "BTM Layout, Bangalore",
-            meta: "Experience: 2-4 Years",
-            desc: "Directing statutory and internal control audits (ICFR) under the Indian Companies Act. Candidates must have solid experience in Ind AS conversion schedules and stock audits representation."
-        }
-    ];
-
-    // Seed database if empty
+    // Seed database if not set
     if (!localStorage.getItem('anved_insights')) {
         localStorage.setItem('anved_insights', JSON.stringify(defaultInsights));
     }
