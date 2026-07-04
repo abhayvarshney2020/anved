@@ -5,7 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Set to Formspree endpoint (e.g. 'https://formspree.io/f/xxxx') to trigger email notifications!
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mpqgkknq';
+    const FORMSPREE_ENDPOINT = '';
 
     const getCategoryTagHTML = (cat) => {
         const category = cat.toUpperCase().trim();
@@ -562,6 +562,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.body.style.overflow = '';
             }
         });
+
+        // Pre-select service in dropdown if query parameter exists
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceParam = urlParams.get('service');
+        if (serviceParam) {
+            const selectEl = document.getElementById('contactService');
+            if (selectEl) {
+                for (let i = 0; i < selectEl.options.length; i++) {
+                    if (selectEl.options[i].value === serviceParam) {
+                        selectEl.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     /* --- Newsletter Form Submission --- */
