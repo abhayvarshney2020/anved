@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Anved Consultancy</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+        }
+        .admin-sidebar {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            height: fit-content;
+        }
+        .admin-menu-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            color: var(--text-body);
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+        }
+        .admin-menu-btn:hover {
+            background-color: var(--border-color);
+            color: var(--primary);
+        }
+        .admin-menu-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        .admin-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        .admin-card h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .admin-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .admin-table th, .admin-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            vertical-align: top;
+        }
+        .admin-table th {
+            background-color: var(--bg-secondary);
+            font-weight: 700;
+            color: var(--text-title);
+        }
+        .admin-action-btn {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        .btn-delete {
+            background-color: #FEE2E2;
+            color: #DC2626;
+        }
+        .btn-delete:hover {
+            background-color: #DC2626;
+            color: white;
+        }
+        .admin-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #059669;
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-md);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1000;
+        }
+        .admin-toast.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .empty-placeholder {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Login Card overlay */
+        .login-overlay-container {
+            max-width: 440px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        .login-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+        .login-logo {
+            margin-bottom: 24px;
+            background: white;
+            padding: 6px 12px;
+            border-radius: var(--border-radius-sm);
+            display: inline-block;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+        .login-card h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-bottom: 8px;
+        }
+        .login-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .login-error {
+            color: #DC2626;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background-color: #FEE2E2;
+            padding: 10px 14px;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 20px;
+            display: none;
+            text-align: left;
+            border-left: 4px solid #DC2626;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar-header" id="header">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo-brand">
+                <img src="assets/Anved%20-%20Logo.jpg" alt="Anved Logo" style="max-height: 44px; width: auto; object-fit: contain;">
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </div>
+                <div class="nav-item">
+                    <a href="about.html" class="nav-link">About Us</a>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="services.html" class="nav-link">Services <span class="arrow-icon">&#9662;</span></a>
+                    <div class="dropdown-menu">
+                        <a href="services.html#direct-tax">Direct Taxation</a>
+                        <a href="services.html#indirect-tax">Indirect Taxation</a>
+                        <a href="services.html#secretarial">Secretarial Services</a>
+                        <a href="services.html#payroll">Payroll Processing</a>
+                        <a href="services.html#advisory">Advisory Services</a>
+                        <a href="services.html#litigation">Litigation Support</a>
+                        <a href="services.html#transfer-pricing">Transfer Pricing</a>
+                        <a href="services.html#statutory-audit">Statutory & Tax Audit</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="insights.html" class="nav-link">Insights</a>
+                </div>
+                <div class="nav-item">
+                    <a href="careers.html" class="nav-link">Careers</a>
+                </div>
+                <div class="nav-item">
+                    <a href="contact.html" class="nav-btn">Contact Us</a>
+                </div>
+            </nav>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <div class="page-banner">
+        <div class="container banner-content">
+            <h1>Admin Console</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span class="current">Admin</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Container -->
+    <div id="adminLoginWrapper" class="login-overlay-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="assets/Anved%20-%20Logo.jpg" alt="Anved Logo" style="max-height: 36px; width: auto; object-fit: contain; display: block;">
+            </div>
+            <h2>Console Login</h2>
+            <p>Access is restricted to authorized personnel. Provide credentials to configure active opportunities and regulatory posts.</p>
+            
+            <div class="login-error" id="loginErrorMsg">Invalid username or password. Please try again.</div>
+            
+            <form id="formAdminLogin" novalidate>
+                <div class="form-group floating-label-group" style="margin-bottom: 20px;">
+                    <input type="text" id="loginUsername" required placeholder=" ">
+                    <label for="loginUsername">Username</label>
+                </div>
+                <div class="form-group floating-label-group" style="margin-bottom: 24px;">
+                    <input type="password" id="loginPassword" required placeholder=" ">
+                    <label for="loginPassword">Password</label>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-weight: 700;">Access Console</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Panel Layout (Hidden by default) -->
+    <div id="adminDashboardWrapper" class="admin-container" style="display: none;">
+        <div class="admin-header">
+            <div>
+                <h2>Portal Administration</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Configure insights articles, compliance alerts, and view client submissions.</p>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn btn-secondary" id="btnRestoreDefaults" style="font-size: 0.85rem; padding: 10px 18px;">Reset Defaults</button>
+                <button class="btn btn-secondary" id="btnLogoutAdmin" style="font-size: 0.85rem; padding: 10px 18px; background-color: #F3F4F6; border-color: #D1D5DB; color: #374151;">Logout</button>
+            </div>
+        </div>
+
+        <div class="admin-grid">
+            <!-- Sidebar Tabs -->
+            <div class="admin-sidebar">
+                <button class="admin-menu-btn active" data-tab="tab-insights">Regulatory Insights</button>
+                <button class="admin-menu-btn" data-tab="tab-careers">Job Openings</button>
+                <button class="admin-menu-btn" data-tab="tab-contact-subs">Contact Inquiries</button>
+                <button class="admin-menu-btn" data-tab="tab-career-subs">Job Applications</button>
+                <button class="admin-menu-btn" data-tab="tab-news-subs">Newsletter List</button>
+            </div>
+
+            <!-- Main Panel Content -->
+            <div class="admin-main">
+                
+                <!-- Tab: Manage Insights -->
+                <div class="admin-tab-panel" id="tab-insights">
+                    <div class="admin-card">
+                        <h3>Publish New Insight Article</h3>
+                        <form id="formAddInsight" novalidate>
+                            <div class="admin-form-grid">
+                                <div class="form-group">
+                                    <label class="static-label">Article Title</label>
+                                    <input type="text" id="insightTitle" required placeholder="e.g., Union Budget 2026 amendments">
+                                </div>
+                                <div class="form-group">
+                                    <label class="static-label">Category Tag</label>
+                                    <input type="text" id="insightCategory" required placeholder="e.g., INCOME TAX, GST ALERTS, FEMA">
+                                </div>
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label class="static-label">Short Description</label>
+                                    <textarea id="insightDesc" required placeholder="Summary outline of the regulatory amendment..." rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="static-label">Publication Date</label>
+                                    <input type="text" id="insightDate" required placeholder="e.g., July 2026">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Publish Article</button>
+                        </form>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Active Publications</h3>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th style="width: 100px; text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyInsights">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab: Manage Careers -->
+                <div class="admin-tab-panel" id="tab-careers" style="display: none;">
+                    <div class="admin-card">
+                        <h3>Publish New Job Position</h3>
+                        <form id="formAddCareer" novalidate>
+                            <div class="admin-form-grid">
+                                <div class="form-group">
+                                    <label class="static-label">Job Title</label>
+                                    <input type="text" id="careerTitle" required placeholder="e.g., Indirect Tax Manager">
+                                </div>
+                                <div class="form-group">
+                                    <label class="static-label">Job Type</label>
+                                    <input type="text" id="careerType" required placeholder="e.g., Full-Time, Internship">
+                                </div>
+                                <div class="form-group">
+                                    <label class="static-label">Office Location</label>
+                                    <input type="text" id="careerLocation" required placeholder="e.g., BTM Layout, Bangalore">
+                                </div>
+                                <div class="form-group">
+                                    <label class="static-label">Requirements / Openings</label>
+                                    <input type="text" id="careerMeta" required placeholder="e.g., Experience: 2-4 Years, Openings: 3">
+                                </div>
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label class="static-label">Job Description</label>
+                                    <textarea id="careerDesc" required placeholder="Outline role duties, double-entry audit tasks..." rows="3"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Publish Job Card</button>
+                        </form>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Active Openings</h3>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th style="width: 100px; text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyCareers">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab: Contact Inquiries (NEW) -->
+                <div class="admin-tab-panel" id="tab-contact-subs" style="display: none;">
+                    <div class="admin-card">
+                        <h3>Client Consultation Inquiries</h3>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 160px;">Timestamp</th>
+                                    <th style="width: 220px;">Client details</th>
+                                    <th style="width: 180px;">Service</th>
+                                    <th>Inquiry Message</th>
+                                    <th style="width: 100px; text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyContactSubs">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab: Job Applications (NEW) -->
+                <div class="admin-tab-panel" id="tab-career-subs" style="display: none;">
+                    <div class="admin-card">
+                        <h3>Submitted Job Applications</h3>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 160px;">Timestamp</th>
+                                    <th style="width: 220px;">Applicant details</th>
+                                    <th style="width: 180px;">Target Role</th>
+                                    <th style="width: 180px;">Resume file</th>
+                                    <th>Cover Letter Info</th>
+                                    <th style="width: 100px; text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyCareerSubs">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab: Newsletter Subscribers (NEW) -->
+                <div class="admin-tab-panel" id="tab-news-subs" style="display: none;">
+                    <div class="admin-card">
+                        <h3>Newsletter Subscription List</h3>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 200px;">Timestamp</th>
+                                    <th>Subscriber Email</th>
+                                    <th style="width: 100px; text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyNewsSubs">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="admin-toast" id="toastMessage">Database Updated Successfully!</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand-info">
+                <a href="index.html" class="logo-brand" style="background: white; padding: 6px 12px; border-radius: 4px; display: inline-block;">
+                    <img src="assets/Anved%20-%20Logo.jpg" alt="Anved Logo" style="max-height: 32px; width: auto; display: block; object-fit: contain;">
+                </a>
+                <p style="margin-top: 16px;">Governing cross-border corporate law compliance and strategic investment tax advisor services.</p>
+                <p class="copyright-text">&copy; 2026 Anved Consultancy. All Rights Reserved.</p>
+            </div>
+
+            <div class="footer-nav">
+                <h4>Firm Navigation</h4>
+                <ul>
+                    <li><a href="about.html">About Anved</a></li>
+                    <li><a href="services.html">Practice Services</a></li>
+                    <li><a href="insights.html">Regulatory Insights</a></li>
+                    <li><a href="careers.html">Career Openings</a></li>
+                    <li><a href="admin.html" style="opacity: 0.6; font-size: 0.8rem; margin-top: 12px; display: inline-block;">Admin Portal</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-disclaimer">
+                <h4>Legal & Registration Notice</h4>
+                <p class="disclaimer-text">Registered under corporate compliance boards. HQ Flat No. 112, Block A, Sumukha, Kalpavruksha, Kodichikkanahalli Road, Bangalore, India - 560076. Information presented is educational and does not constitute formal advisory until engagement is signed.</p>
+            </div>
+        </div>
+        <button class="back-to-top" id="backToTop" aria-label="Scroll to top">&#8593;</button>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            /* --- Authentication Control --- */
+            const loginWrapper = document.getElementById('adminLoginWrapper');
+            const dashboardWrapper = document.getElementById('adminDashboardWrapper');
+            const loginForm = document.getElementById('formAdminLogin');
+            const logoutBtn = document.getElementById('btnLogoutAdmin');
+            const loginError = document.getElementById('loginErrorMsg');
+
+            const checkAuth = () => {
+                if (sessionStorage.getItem('anved_admin_authenticated') === 'true') {
+                    loginWrapper.style.display = 'none';
+                    dashboardWrapper.style.display = 'block';
+                } else {
+                    loginWrapper.style.display = 'block';
+                    dashboardWrapper.style.display = 'none';
+                }
+            };
+
+            checkAuth();
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const u = document.getElementById('loginUsername').value.trim();
+                const p = document.getElementById('loginPassword').value.trim();
+
+                if (u === 'admin' && p === 'Anved2026') {
+                    loginError.style.display = 'none';
+                    sessionStorage.setItem('anved_admin_authenticated', 'true');
+                    checkAuth();
+                    loginForm.reset();
+                    showToast('Logged In Successfully!');
+                } else {
+                    loginError.style.display = 'block';
+                }
+            });
+
+            logoutBtn.addEventListener('click', () => {
+                sessionStorage.removeItem('anved_admin_authenticated');
+                checkAuth();
+                showToast('Logged Out Successfully');
+            });
+
+            /* --- Admin Navigation Tabs --- */
+            const sideBtns = document.querySelectorAll('.admin-menu-btn');
+            const panels = document.querySelectorAll('.admin-tab-panel');
+
+            sideBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = btn.getAttribute('data-tab');
+                    sideBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    panels.forEach(p => {
+                        if (p.getAttribute('id') === target) {
+                            p.style.display = 'block';
+                        } else {
+                            p.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            /* --- Toast Helper --- */
+            const toast = document.getElementById('toastMessage');
+            const showToast = (msg) => {
+                toast.innerText = msg;
+                toast.classList.add('active');
+                setTimeout(() => toast.classList.remove('active'), 2500);
+            };
+
+            /* --- Storage Helpers --- */
+            const getInsights = () => JSON.parse(localStorage.getItem('anved_insights')) || [];
+            const saveInsights = (data) => localStorage.setItem('anved_insights', JSON.stringify(data));
+            const getCareers = () => JSON.parse(localStorage.getItem('anved_careers')) || [];
+            const saveCareers = (data) => localStorage.setItem('anved_careers', JSON.stringify(data));
+            
+            const getContactSubs = () => JSON.parse(localStorage.getItem('anved_contact_submissions')) || [];
+            const saveContactSubs = (data) => localStorage.setItem('anved_contact_submissions', JSON.stringify(data));
+            const getCareerSubs = () => JSON.parse(localStorage.getItem('anved_career_submissions')) || [];
+            const saveCareerSubs = (data) => localStorage.setItem('anved_career_submissions', JSON.stringify(data));
+            const getNewsSubs = () => JSON.parse(localStorage.getItem('anved_newsletter_subscribers')) || [];
+            const saveNewsSubs = (data) => localStorage.setItem('anved_newsletter_subscribers', JSON.stringify(data));
+
+            const defaultInsights = [
+                {
+                    id: 1,
+                    title: "New Slabs and Surcharges for FY 2025-26 under New Regime",
+                    category: "INCOME TAX",
+                    desc: "An analysis of standard deduction changes to ₹75,000 and updated slab rates under Section 115BAC.",
+                    date: "July 2026"
+                },
+                {
+                    id: 2,
+                    title: "Filing Guidelines for E-Way Bills & Invoicing Updates",
+                    category: "GST ALERTS",
+                    desc: "Key revisions introduced in compliance procedures for multi-state corporate logistic setups.",
+                    date: "June 2026"
+                },
+                {
+                    id: 3,
+                    title: "Annual ROC Web-form Updates: Form 8 & Form 11 Compliance",
+                    category: "LLP FILINGS",
+                    desc: "Essential timeline updates and audit checklists for Limited Liability Partnerships operating in India.",
+                    date: "May 2026"
+                }
+            ];
+
+            const defaultCareers = [
+                {
+                    id: 1,
+                    title: "CA Article Trainee",
+                    type: "Full-Time",
+                    location: "BTM Layout, Bangalore",
+                    meta: "Openings: 3",
+                    desc: "We are seeking motivated candidates who have cleared one or both groups of CA Intermediate. Exposure to accounting double-entry systems, direct tax filing, and basic auditing guidelines is preferred."
+                },
+                {
+                    id: 2,
+                    title: "Indirect Tax Associate",
+                    type: "Full-Time",
+                    location: "BTM Layout, Bangalore",
+                    meta: "Experience: 1-3 Years",
+                    desc: "Managing monthly and annual GST filing processes, conducting input credit reconciliations (GSTR-2B vs. Books), and compiling document briefs for client representations."
+                },
+                {
+                    id: 3,
+                    title: "Statutory Audit Senior",
+                    type: "Full-Time",
+                    location: "BTM Layout, Bangalore",
+                    meta: "Experience: 2-4 Years",
+                    desc: "Directing statutory and internal control audits (ICFR) under the Indian Companies Act. Candidates must have solid experience in Ind AS conversion schedules and stock audits representation."
+                }
+            ];
+
+            const defaultContacts = [
+                {
+                    id: 1,
+                    name: "Mangalore Retail Ventures",
+                    email: "compliance@retailventures.in",
+                    service: "GST Advisory & Reconciliations",
+                    message: "Requesting service fees structure and timeline metrics for multi-state double-entry accounting audit representation.",
+                    timestamp: new Date().toLocaleString()
+                }
+            ];
+
+            const defaultApplications = [
+                {
+                    id: 1,
+                    name: "Karthik Hegde",
+                    email: "karthik.hegde@outlook.com",
+                    position: "Statutory Audit Senior",
+                    resumeName: "Karthik_Hegde_CA_Resume.pdf",
+                    coverInfo: "Cleared CA Intermediate both groups in first attempt. 3 years of auditing internship completed at local firm, representing ICFR reviews.",
+                    timestamp: new Date().toLocaleString()
+                }
+            ];
+
+            const defaultNewsletter = [
+                {
+                    id: 1,
+                    email: "info@retailventures.in",
+                    timestamp: new Date().toLocaleString()
+                }
+            ];
+
+            const initializeStorage = (force = false) => {
+                if (force || !localStorage.getItem('anved_insights')) {
+                    saveInsights(defaultInsights);
+                }
+                if (force || !localStorage.getItem('anved_careers')) {
+                    saveCareers(defaultCareers);
+                }
+                if (force || !localStorage.getItem('anved_contact_submissions')) {
+                    saveContactSubs(defaultContacts);
+                }
+                if (force || !localStorage.getItem('anved_career_submissions')) {
+                    saveCareerSubs(defaultApplications);
+                }
+                if (force || !localStorage.getItem('anved_newsletter_subscribers')) {
+                    saveNewsSubs(defaultNewsletter);
+                }
+            };
+
+            initializeStorage();
+
+            /* --- Render Tables --- */
+            const renderInsights = () => {
+                const list = getInsights();
+                const tbody = document.getElementById('tableBodyInsights');
+                tbody.innerHTML = '';
+                
+                if (list.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="empty-placeholder">No Insights Published Yet.</td></tr>`;
+                    return;
+                }
+
+                list.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-weight:600; color:var(--text-title);">${item.title}</td>
+                        <td><span class="insight-tag" style="padding: 4px 8px; font-size: 0.75rem;">${item.category}</span></td>
+                        <td>${item.date}</td>
+                        <td style="text-align:center;">
+                            <button class="admin-action-btn btn-delete" data-id="${item.id}">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                tbody.querySelectorAll('#tableBodyInsights .btn-delete').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = parseInt(btn.getAttribute('data-id'));
+                        let current = getInsights();
+                        current = current.filter(x => x.id !== id);
+                        saveInsights(current);
+                        renderInsights();
+                        showToast('Article Deleted Successfully');
+                    });
+                });
+            };
+
+            const renderCareers = () => {
+                const list = getCareers();
+                const tbody = document.getElementById('tableBodyCareers');
+                tbody.innerHTML = '';
+
+                if (list.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="empty-placeholder">No Active Job Cards Published.</td></tr>`;
+                    return;
+                }
+
+                list.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-weight:600; color:var(--text-title);">${item.title}</td>
+                        <td><span class="job-type" style="padding: 4px 8px; font-size: 0.75rem;">${item.type}</span></td>
+                        <td>${item.location}</td>
+                        <td style="text-align:center;">
+                            <button class="admin-action-btn btn-delete" data-id="${item.id}">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                tbody.querySelectorAll('#tableBodyCareers .btn-delete').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = parseInt(btn.getAttribute('data-id'));
+                        let current = getCareers();
+                        current = current.filter(x => x.id !== id);
+                        saveCareers(current);
+                        renderCareers();
+                        showToast('Job Position Deleted Successfully');
+                    });
+                });
+            };
+
+            const renderContactSubmissions = () => {
+                const list = getContactSubs();
+                const tbody = document.getElementById('tableBodyContactSubs');
+                tbody.innerHTML = '';
+
+                if (list.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="empty-placeholder">No inquiries submitted yet.</td></tr>`;
+                    return;
+                }
+
+                list.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-size:0.8rem; color:var(--text-muted);">${item.timestamp}</td>
+                        <td>
+                            <strong style="color:var(--text-title);">${item.name}</strong><br>
+                            <span style="font-size:0.8rem; color:var(--primary);">${item.email}</span>
+                        </td>
+                        <td><span class="insight-tag" style="font-size: 0.75rem; background:#E0F2FE; color:#0369A1;">${item.service}</span></td>
+                        <td style="font-size:0.85rem; line-height:1.5;">${item.message}</td>
+                        <td style="text-align:center;">
+                            <button class="admin-action-btn btn-delete" data-id="${item.id}">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                tbody.querySelectorAll('#tableBodyContactSubs .btn-delete').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = parseInt(btn.getAttribute('data-id'));
+                        let current = getContactSubs();
+                        current = current.filter(x => x.id !== id);
+                        saveContactSubs(current);
+                        renderContactSubmissions();
+                        showToast('Inquiry Entry Cleared');
+                    });
+                });
+            };
+
+            const renderCareerApplications = () => {
+                const list = getCareerSubs();
+                const tbody = document.getElementById('tableBodyCareerSubs');
+                tbody.innerHTML = '';
+
+                if (list.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="empty-placeholder">No job applications submitted yet.</td></tr>`;
+                    return;
+                }
+
+                list.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-size:0.8rem; color:var(--text-muted);">${item.timestamp}</td>
+                        <td>
+                            <strong style="color:var(--text-title);">${item.name}</strong><br>
+                            <span style="font-size:0.8rem; color:var(--primary);">${item.email}</span>
+                        </td>
+                        <td style="font-weight:700; color:var(--text-title);">${item.position}</td>
+                        <td>
+                            <span style="font-size: 0.8rem; display:inline-flex; align-items:center; gap:4px; padding:4px 8px; background:#FEF3C7; color:#D97706; border-radius:4px; font-weight:600;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                ${item.resumeName}
+                            </span>
+                        </td>
+                        <td style="font-size:0.85rem; line-height:1.5;">${item.coverInfo}</td>
+                        <td style="text-align:center;">
+                            <button class="admin-action-btn btn-delete" data-id="${item.id}">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                tbody.querySelectorAll('#tableBodyCareerSubs .btn-delete').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = parseInt(btn.getAttribute('data-id'));
+                        let current = getCareerSubs();
+                        current = current.filter(x => x.id !== id);
+                        saveCareerSubs(current);
+                        renderCareerApplications();
+                        showToast('Application Entry Cleared');
+                    });
+                });
+            };
+
+            const renderNewsletterSubscribers = () => {
+                const list = getNewsSubs();
+                const tbody = document.getElementById('tableBodyNewsSubs');
+                tbody.innerHTML = '';
+
+                if (list.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="3" class="empty-placeholder">No subscribers on list yet.</td></tr>`;
+                    return;
+                }
+
+                list.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-size:0.8rem; color:var(--text-muted);">${item.timestamp}</td>
+                        <td style="font-weight:600; color:var(--text-title);">${item.email}</td>
+                        <td style="text-align:center;">
+                            <button class="admin-action-btn btn-delete" data-id="${item.id}">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                tbody.querySelectorAll('#tableBodyNewsSubs .btn-delete').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = parseInt(btn.getAttribute('data-id'));
+                        let current = getNewsSubs();
+                        current = current.filter(x => x.id !== id);
+                        saveNewsSubs(current);
+                        renderNewsletterSubscribers();
+                        showToast('Email Subscriber Removed');
+                    });
+                });
+            };
+
+            renderInsights();
+            renderCareers();
+            renderContactSubmissions();
+            renderCareerApplications();
+            renderNewsletterSubscribers();
+
+            /* --- Forms Submissions --- */
+            document.getElementById('formAddInsight').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const title = document.getElementById('insightTitle').value.trim();
+                const category = document.getElementById('insightCategory').value.trim().toUpperCase();
+                const desc = document.getElementById('insightDesc').value.trim();
+                const date = document.getElementById('insightDate').value.trim();
+
+                if (!title || !category || !desc || !date) {
+                    alert('Please fill out all fields.');
+                    return;
+                }
+
+                const list = getInsights();
+                const newItem = {
+                    id: Date.now(),
+                    title,
+                    category,
+                    desc,
+                    date
+                };
+                list.unshift(newItem);
+                saveInsights(list);
+                renderInsights();
+                document.getElementById('formAddInsight').reset();
+                showToast('Regulatory Alert Published!');
+            });
+
+            document.getElementById('formAddCareer').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const title = document.getElementById('careerTitle').value.trim();
+                const type = document.getElementById('careerType').value.trim();
+                const location = document.getElementById('careerLocation').value.trim();
+                const meta = document.getElementById('careerMeta').value.trim();
+                const desc = document.getElementById('careerDesc').value.trim();
+
+                if (!title || !type || !location || !meta || !desc) {
+                    alert('Please fill out all fields.');
+                    return;
+                }
+
+                const list = getCareers();
+                const newItem = {
+                    id: Date.now(),
+                    title,
+                    type,
+                    location,
+                    meta,
+                    desc
+                };
+                list.unshift(newItem);
+                saveCareers(list);
+                renderCareers();
+                document.getElementById('formAddCareer').reset();
+                showToast('Job Position Published!');
+            });
+
+            /* --- Reset Defaults Trigger --- */
+            document.getElementById('btnRestoreDefaults').addEventListener('click', () => {
+                if (confirm('Are you sure you want to restore defaults? This will overwrite your custom modifications.')) {
+                    initializeStorage(true);
+                    renderInsights();
+                    renderCareers();
+                    renderContactSubmissions();
+                    renderCareerApplications();
+                    renderNewsletterSubscribers();
+                    showToast('Default Database Restored!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

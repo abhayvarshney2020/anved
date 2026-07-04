@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regulatory Insights | Anved Consultancy</title>
+    <meta name="description" content="Read expert updates on income tax slabs, GST council recommendations, company law, and LLP filing regulations.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar-header" id="header">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo-brand">
+                <img src="assets/Anved%20-%20Logo.jpg" alt="Anved Logo" style="max-height: 44px; width: auto; object-fit: contain;">
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </div>
+                <div class="nav-item">
+                    <a href="about.html" class="nav-link">About Us</a>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="services.html" class="nav-link">Services <span class="arrow-icon">&#9662;</span></a>
+                    <div class="dropdown-menu">
+                        <a href="services.html#direct-tax">Direct Taxation</a>
+                        <a href="services.html#indirect-tax">Indirect Taxation</a>
+                        <a href="services.html#secretarial">Secretarial Services</a>
+                        <a href="services.html#payroll">Payroll Processing</a>
+                        <a href="services.html#advisory">Advisory Services</a>
+                        <a href="services.html#litigation">Litigation Support</a>
+                        <a href="services.html#transfer-pricing">Transfer Pricing</a>
+                        <a href="services.html#statutory-audit">Statutory & Tax Audit</a>
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="insights.html" class="nav-link active">Insights</a>
+                </div>
+                <div class="nav-item">
+                    <a href="careers.html" class="nav-link">Careers</a>
+                </div>
+                <div class="nav-item">
+                    <a href="contact.html" class="nav-btn">Contact Us</a>
+                </div>
+            </nav>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <div class="page-banner">
+        <div class="container banner-content">
+            <h1>Regulatory Insights</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span class="current">Insights</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Publications Section -->
+    <section>
+        <div class="container">
+            <!-- Search Bar -->
+            <div class="insights-search-bar">
+                <input type="text" id="insightsSearch" placeholder="Search tax alerts, statutory filings, GST updates...">
+                <button type="button" id="btnSearch">Search</button>
+            </div>
+
+            <!-- Grid -->
+            <div class="insights-grid" id="insightsGrid">
+                <!-- Dynamic Insight cards will render here via app.js -->
+                
+                <!-- Empty State -->
+                <div class="insight-empty-state" id="insightEmpty">
+                    <h3>No Insights Match Your Query</h3>
+                    <p>Try searching using broader terms such as "tax", "GST", "ROC", or "FEMA".</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand-info">
+                <a href="index.html" class="logo-brand" style="background: white; padding: 6px 12px; border-radius: 4px; display: inline-block;">
+                    <img src="assets/Anved%20-%20Logo.jpg" alt="Anved Logo" style="max-height: 32px; width: auto; display: block; object-fit: contain;">
+                </a>
+                <p style="margin-top: 16px;">Governing cross-border corporate law compliance and strategic investment tax advisor services.</p>
+                <p class="copyright-text">&copy; 2026 Anved Consultancy. All Rights Reserved.</p>
+            </div>
+
+            <div class="footer-nav">
+                <h4>Firm Navigation</h4>
+                <ul>
+                    <li><a href="about.html">About Anved</a></li>
+                    <li><a href="services.html">Practice Services</a></li>
+                    <li><a href="insights.html">Regulatory Insights</a></li>
+                    <li><a href="careers.html">Career Openings</a></li>
+                    <li><a href="admin.html" style="opacity: 0.6; font-size: 0.8rem; margin-top: 12px; display: inline-block;">Admin Portal</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-disclaimer">
+                <h4>Legal & Registration Notice</h4>
+                <p class="disclaimer-text">Registered under corporate compliance boards. HQ Flat No. 112, Block A, Sumukha, Kalpavruksha, Kodichikkanahalli Road, Bangalore, India - 560076. Information presented is educational and does not constitute formal advisory until engagement is signed.</p>
+            </div>
+        </div>
+        <button class="back-to-top" id="backToTop" aria-label="Scroll to top">&#8593;</button>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

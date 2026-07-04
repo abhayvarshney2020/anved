@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers | Anved Consultancy</title>
+    <meta name="description" content="Join Anved Consultancy. Explore openings for CA Article Trainees, Audit Seniors, and Direct Tax Associates in Bangalore.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar-header" id="header">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo-brand">
+                <img src="assets/Anved%20-%20Logo.jpg" alt="Anved Logo" style="max-height: 44px; width: auto; object-fit: contain;">
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </div>
+                <div class="nav-item">
+                    <a href="about.html" class="nav-link">About Us</a>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="services.html" class="nav-link">Services <span class="arrow-icon">&#9662;</span></a>
+                    <div class="dropdown-menu">
+                        <a href="services.html#direct-tax">Direct Taxation</a>
+                        <a href="services.html#indirect-tax">Indirect Taxation</a>
+                        <a href="services.html#secretarial">Secretarial Services</a>
+                        <a href="services.html#payroll">Payroll Processing</a>
+                        <a href="services.html#advisory">Advisory Services</a>
+                        <a href="services.html#litigation">Litigation Support</a>
+                        <a href="services.html#transfer-pricing">Transfer Pricing</a>
+                        <a href="services.html#statutory-audit">Statutory & Tax Audit</a>
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="insights.html" class="nav-link">Insights</a>
+                </div>
+                <div class="nav-item">
+                    <a href="careers.html" class="nav-link active">Careers</a>
+                </div>
+                <div class="nav-item">
+                    <a href="contact.html" class="nav-btn">Contact Us</a>
+                </div>
+            </nav>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <div class="page-banner">
+        <div class="container banner-content">
+            <h1>Careers at Anved</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span class="current">Careers</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Board & Application Panel -->
+    <section>
+        <div class="container careers-grid">
+            <div class="careers-opportunities">
+                <span class="section-subtitle">JOIN OUR TEAM</span>
+                <h2 class="section-title">Open Opportunities</h2>
+                <div class="title-underline" style="margin: 0; margin-bottom: 32px;"></div>
+
+                <div class="jobs-list" id="jobsListContainer">
+                    <!-- Dynamic jobs will render here via app.js -->
+                </div>
+            </div>
+
+            <!-- Application Form Card -->
+            <div class="careers-form-card">
+                <h2>Submit Application</h2>
+                <p>Submit your resume and details to apply for active positions or general considerations.</p>
+                <form id="careerForm" novalidate>
+                    <div class="form-group floating-label-group">
+                        <input type="text" id="appName" required placeholder=" ">
+                        <label for="appName">Full Name</label>
+                        <span class="error-msg">Name is required</span>
+                    </div>
+
+                    <div class="form-group floating-label-group">
+                        <input type="email" id="appEmail" required placeholder=" ">
+                        <label for="appEmail">Email Address</label>
+                        <span class="error-msg">Valid email is required</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appPosition" class="static-label">Target Position</label>
+                        <div class="custom-select-wrapper">
+                            <select id="appPosition">
+                                <option value="articleship">CA Article Trainee</option>
+                                <option value="tax-associate">Indirect Tax Associate</option>
+                                <option value="audit-senior">Statutory Audit Senior</option>
+                                <option value="general">General Application / Intern</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="static-label">Attach Resume (PDF/Word)</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="appResume" accept=".pdf,.doc,.docx" required>
+                            <div class="file-upload-label" id="resumeLabel">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                <span id="uploadStatus">Upload Document</span>
+                            </div>
+                        </div>
+                        <span class="error-msg" id="resumeError" style="display:none; color:#EF4444; font-weight:600; font-size:0.75rem; margin-top:4px;">Please upload a resume</span>
+                    </div>
+
+                    <div class="form-group floating-label-group">
+                        <textarea id="appMessage" required placeholder=" " rows="3"></textarea>
+                        <label for="appMessage">Brief cover letter info...</label>
+                        <span class="error-msg">Cover letter info is required</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-full" id="btnSubmitApp">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Career Application Success Modal -->
+    <div class="modal-overlay" id="appSuccessModal">
+        <div class="modal-container">
+            <div class="success-icon-wrapper">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3>Application Received</h3>
+            <p>Your job application details have been received successfully. The Anved HR department will contact you for a screening call if your qualifications match the position requirements.</p>
+            <button class="btn btn-dark" id="btnAppClose">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand-info">
+                <a href="index.html" class="logo-brand" style="background: white; padding: 6px 12px; border-radius: 4px; display: inline-block;">
+                    <img src="assets/Anved%20-%20Logo.jpg" alt="Anved Logo" style="max-height: 32px; width: auto; display: block; object-fit: contain;">
+                </a>
+                <p style="margin-top: 16px;">Governing cross-border corporate law compliance and strategic investment tax advisor services.</p>
+                <p class="copyright-text">&copy; 2026 Anved Consultancy. All Rights Reserved.</p>
+            </div>
+
+            <div class="footer-nav">
+                <h4>Firm Navigation</h4>
+                <ul>
+                    <li><a href="about.html">About Anved</a></li>
+                    <li><a href="services.html">Practice Services</a></li>
+                    <li><a href="insights.html">Regulatory Insights</a></li>
+                    <li><a href="careers.html">Career Openings</a></li>
+                    <li><a href="admin.html" style="opacity: 0.6; font-size: 0.8rem; margin-top: 12px; display: inline-block;">Admin Portal</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-disclaimer">
+                <h4>Legal & Registration Notice</h4>
+                <p class="disclaimer-text">Registered under corporate compliance boards. HQ Flat No. 112, Block A, Sumukha, Kalpavruksha, Kodichikkanahalli Road, Bangalore, India - 560076. Information presented is educational and does not constitute formal advisory until engagement is signed.</p>
+            </div>
+        </div>
+        <button class="back-to-top" id="backToTop" aria-label="Scroll to top">&#8593;</button>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
