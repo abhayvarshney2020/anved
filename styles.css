@@ -578,16 +578,23 @@ section {
     line-height: 1.5;
 }
 
-.home-service-item .service-num {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--border-hover);
-    display: block;
+.home-service-item svg {
+    color: var(--primary);
+    background-color: var(--accent-light);
+    padding: 10px;
+    border-radius: var(--border-radius-md);
+    width: 44px;
+    height: 44px;
     margin-bottom: 16px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
 }
 
-.home-service-item:hover .service-num {
-    color: var(--accent);
+.home-service-item:hover svg {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    border-color: transparent;
 }
 
 /* Delivery Process flowchart */
@@ -965,19 +972,35 @@ section {
 }
 
 .services-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     text-align: left;
-    padding: 12px 18px;
+    padding: 14px 20px;
     font-weight: 700;
     font-size: 0.875rem;
     color: var(--text-muted);
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-md);
     cursor: pointer;
     transition: var(--transition-fast);
+    background: transparent;
+    border: none;
+    width: 100%;
+}
+
+.services-tab-btn svg {
+    color: var(--primary);
+    transition: var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.services-tab-btn.active svg {
+    color: white;
 }
 
 .services-tab-btn:hover {
     color: var(--primary);
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.6);
 }
 
 .services-tab-btn.active {
@@ -1057,6 +1080,11 @@ section {
     color: var(--text-muted);
     margin: 0;
     line-height: 1.5;
+    text-align: justify;
+}
+
+.services-tab-panel p {
+    text-align: justify;
 }
 
 /* ==========================================================================
@@ -2091,4 +2119,45 @@ section {
         text-align: center;
         padding: 24px !important;
     }
+
+    /* Horizontal scroll bar for subpages services navigation on small viewports */
+    .services-tab-nav {
+        flex-direction: row !important;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 12px !important;
+        -webkit-overflow-scrolling: touch;
+        gap: 12px !important;
+    }
+    
+    .services-tab-btn {
+        width: auto !important;
+        flex-shrink: 0;
+        padding: 10px 16px !important;
+    }
+    
+    .services-tab-nav::-webkit-scrollbar {
+        height: 6px;
+    }
+    .services-tab-nav::-webkit-scrollbar-thumb {
+        background-color: var(--border-hover);
+        border-radius: 3px;
+    }
+}
+
+/* ==========================================================================
+   GLOBAL CONTENT PARAGRAPH JUSTIFICATION
+   ========================================================================== */
+.hero-desc,
+.about-intro-content p,
+.firm-philosophy p,
+.partner-profile-card-large p,
+.value-card p,
+.insight-card p,
+.job-card p,
+.careers-form-card p,
+.contact-grid p,
+.services-tab-panel p,
+.services-sublist-item p {
+    text-align: justify;
 }
