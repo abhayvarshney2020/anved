@@ -724,41 +724,6 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleHeaderScrolled(); // Run once on load
     }
 
-    // 6. Typewriter Dynamic Text Loop
-    const typingTextEl = document.getElementById('typing-text');
-    if (typingTextEl) {
-        const wordsList = ["Finance Horizon", "Tax Compliance", "Statutory Audits", "Corporate Law"];
-        let wordIdx = 0;
-        let charIdx = 0;
-        let isDeleting = false;
-        let typingSpeed = 100;
 
-        const typeLoop = () => {
-            const currentWord = wordsList[wordIdx];
-            if (isDeleting) {
-                typingTextEl.innerText = currentWord.substring(0, charIdx - 1);
-                charIdx--;
-                typingSpeed = 50; // Deleting is faster
-            } else {
-                typingTextEl.innerText = currentWord.substring(0, charIdx + 1);
-                charIdx++;
-                typingSpeed = 120; // Natural typing speed
-            }
-
-            if (!isDeleting && charIdx === currentWord.length) {
-                isDeleting = true;
-                typingSpeed = 2000; // Pause at end of word
-            } else if (isDeleting && charIdx === 0) {
-                isDeleting = false;
-                wordIdx = (wordIdx + 1) % wordsList.length;
-                typingSpeed = 400; // Brief pause before typing next word
-            }
-
-            setTimeout(typeLoop, typingSpeed);
-        };
-
-        // Start loop
-        typeLoop();
-    }
 
 });
