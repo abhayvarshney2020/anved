@@ -2084,3 +2084,11 @@ section {
     box-shadow: var(--shadow-sm) !important;
     padding: 12px 0 !important;
 }
+
+@media (max-width: 768px) {
+    .partner-profile-card-large {
+        flex-direction: column !important;
+        text-align: center;
+        padding: 24px !important;
+    }
+}
